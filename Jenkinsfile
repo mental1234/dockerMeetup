@@ -12,7 +12,7 @@ pipeline {
         }
         stage("Var") {
             steps {
-                sh 'echo ${params.Nodes}'
+                sh "echo ${params.Nodes}"
             }
         }
         stage('Example') {
