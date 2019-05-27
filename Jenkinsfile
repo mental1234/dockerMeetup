@@ -1,19 +1,17 @@
 pipeline {
     agent any
     parameters {
-      booleanParam(defaultValue: true, description: 'Test paramenter', name: 'Test')
+      choice(choices: ['dev', 'stg'], description: 'Environment', name: 'env')
       string(defaultValue: '5', description: 'Number of nodes', name: 'Nodes')
     }
+    environment { 
+        DOTOKEN = credentials('DO_TOKEN') 
+    }
     stages {
-        stage("foo") {
-            steps {
-                echo "flag: ${params.Test}"
-            }
-        }
         stage("Creation of master node") {
             steps {
                 sh "echo 'Docker master creating...' "
-                sh ""
+                sh 'docker-machine create --driver digitalocean --digitalocean-image ubuntu-16-04-x64 --digitalocean-access-token $DOTOKEN master.${env}'
             }
         }
         stage('Example') {
