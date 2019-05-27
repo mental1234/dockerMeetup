@@ -10,9 +10,10 @@ pipeline {
                 echo "flag: ${params.Test}"
             }
         }
-        stage("Var") {
+        stage("Creation of master node") {
             steps {
-                sh "echo ${params.Nodes}"
+                sh "echo 'Docker master creating...' "
+                sh ""
             }
         }
         stage('Example') {
