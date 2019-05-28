@@ -20,6 +20,19 @@ node('master'){
   }
   stage('Cluster'){
     sh 'echo "hello" '
-    docker swarm init --advertise-addr `docker-machine ip master$environment`
+    MANAGER_IP=`docker-machine ip master$environment`
+    docker swarm init --advertise-addr $MANAGER_IP
+    
+    MANAGER_TOKEN=`docker swarm join-token -q manager`
+    WORKER_TOKEN=`docker swarm join-token -q worker`
+    
+    for i in `seq 1 ${NodeNumber}`; do
+      WORKER_IP=`docker-machine ip node-$i`
+      docker swarm join --token $WORKER_TOKEN --advertise-addr $WORKER_IP $MANAGER_IP:2377
+    done
+  }
+  stage('Final Step'){
+    sh 'docker-machine ls'
+    sh 'docker node ls'
   }
 }
