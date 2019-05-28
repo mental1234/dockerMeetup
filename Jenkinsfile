@@ -3,6 +3,8 @@ node('master'){
 		checkout scm
 	}
 	stage('Main Deploy'){
-        sh 'echo ${region} ${environment}'
-    }
+        withCredentials([string(credentialsId: 'DO_TOKEN', variable: 'SECRET') {
+            sh 'docker-machine create --driver digitalocean --digitalocean-image ubuntu-16-04-x64 --digitalocean-access-token ${SECRET} master$environment'
+        }
+	}
 }
