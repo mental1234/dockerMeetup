@@ -22,7 +22,7 @@ node('master'){
     sh 'echo "hello" '
     sh '''
       MANAGER_IP=`docker-machine ip master$environment`
-      docker swarm init --advertise-addr $MANAGER_IP --listen-addr 0.0.0.0
+      docker swarm init --advertise-addr $MANAGER_IP --listen-addr 127.0.0.1
     
       MANAGER_TOKEN=`docker swarm join-token -q manager`
       WORKER_TOKEN=`docker swarm join-token -q worker`
