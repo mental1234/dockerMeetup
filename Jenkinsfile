@@ -11,8 +11,9 @@ node('master'){
     withCredentials([string(credentialsId: 'DO_TOKEN', variable: 'SECRET')]) {
       sh '''
         echo "Hello ${NodeNumber}"
-        for i in {1..$NodeNumber}; do 
-          docker-machine create --driver digitalocean --digitalocean-image  ubuntu-16-04-x64 --digitalocean-access-token ${SECRET} node$environment-$i
+        for i in {1..$NodeNumber}; do
+          echo $i 
+          #docker-machine create --driver digitalocean --digitalocean-image  ubuntu-16-04-x64 --digitalocean-access-token ${SECRET} node$environment-$i
         done
           
       '''
