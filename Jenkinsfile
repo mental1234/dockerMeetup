@@ -7,7 +7,7 @@ node('master'){
       sh '''
         for i in `seq 1 ${NodeNumber}`; do
           echo "Creating node $i" 
-          docker-machine create --driver digitalocean --digitalocean-image  ubuntu-16-04-x64 --digitalocean-access-token ${SECRET} node$environment-$i
+          docker-machine create --driver digitalocean --digitalocean-image  ${os} --digitalocean-access-token ${SECRET} node$environment-$i
         done
       '''
     } 
