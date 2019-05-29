@@ -20,9 +20,10 @@ node('master'){
   stage('Cluster'){
     sh 'echo "hello" '
     sh '''
-    
+      eval $(docker-machine env master$environment)
+
       MANAGER_IP=`docker-machine ip master$environment`
-      docker swarm init --advertise-addr `docker-machine ip master$environment` --listen-addr 127.0.0.1
+      #docker swarm init --advertise-addr $MANAGER_IP --listen-addr 127.0.0.1
     
       MANAGER_TOKEN=`docker swarm join-token -q manager`
       WORKER_TOKEN=`docker swarm join-token -q worker`
