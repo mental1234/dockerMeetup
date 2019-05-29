@@ -5,7 +5,6 @@ node('master'){
 	stage('Create master node'){
     withCredentials([string(credentialsId: 'DO_TOKEN', variable: 'SECRET')]) {
       sh 'docker-machine create --driver digitalocean --digitalocean-image ubuntu-16-04-x64 --digitalocean-access-token ${SECRET} master$environment'
-      sh 'docker swarm init --advertise-addr $MANAGER_IP --listen-addr 127.0.0.1'
     }
   }
   stage('Create nodes'){
@@ -21,10 +20,10 @@ node('master'){
   stage('Cluster'){
     sh 'echo "hello" '
     sh '''
-      eval $(docker-machine env master$environment)
-
       MANAGER_IP=`docker-machine ip master$environment`
-    
+      docker swarm init --advertise-addr $MANAGER_IP --listen-addr 127.0.0.1
+      eval $(docker-machine env master$environment)
+      
       MANAGER_TOKEN=`docker swarm join-token -q manager`
       WORKER_TOKEN=`docker swarm join-token -q worker`
     
