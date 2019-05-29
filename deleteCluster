@@ -3,7 +3,7 @@ node('master'){
     sh '''
       for i in `seq 1 ${NodeNumber}`; do
         echo "Deleting node $i" 
-        docker-machine rm - f node$environment-$i
+        docker-machine rm -f -y node$environment-$i
       done
     '''
   }
