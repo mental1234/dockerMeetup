@@ -26,7 +26,7 @@ node('master'){
       WORKER_TOKEN=$(docker swarm join-token -q worker)
       MASTER_IP=$(docker-machine ip node$environment-1)
       for i in `seq 1 ${NodeNumber}`; do
-        if [[ $i -eq 1 ]]; then
+        if [ $i -eq 1 ]; then
           echo "Miss the master node"
         else 
           WORKER_IP=$(docker-machine ip node$environment-$i)
