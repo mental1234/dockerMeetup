@@ -5,7 +5,7 @@ node('master'){
 	stage('Create master node'){
     withCredentials([string(credentialsId: 'DO_TOKEN', variable: 'SECRET')]) {
       sh 'docker-machine create --driver digitalocean --digitalocean-image ubuntu-16-04-x64 --digitalocean-access-token ${SECRET} master$environment'
-      sh 'docker swarm init --advertise-addr $MANAGER_IP --listen-addr 127.0.0.1
+      sh 'docker swarm init --advertise-addr $MANAGER_IP --listen-addr 127.0.0.1'
 '
     }
   }
