@@ -21,6 +21,7 @@ node('master'){
   }
   stage('Join rest of nodes'){
     sh '''
+      eval $(docker-machine env node$environment-1)
       MANAGER_TOKEN=$(docker swarm join-token -q manager)
       WORKER_TOKEN=$(docker swarm join-token -q worker)
       MASTER_IP=$(docker-machine ip node$environment-1)
