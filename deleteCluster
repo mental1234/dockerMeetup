@@ -1,0 +1,10 @@
+node('master'){
+	stage('delete nodes'){
+    sh '''
+      for i in `seq 1 ${NodeNumber}`; do
+        echo "Deleting node $i" 
+        docker-machine rm - f node$environment-$i
+      done
+    '''
+  }
+}
