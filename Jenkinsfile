@@ -1,7 +1,4 @@
 node('master'){
-	stage('Checkout'){
-		checkout scm
-	}
 	stage('Create nodes'){
     withCredentials([string(credentialsId: 'DO_TOKEN', variable: 'SECRET')]) {
       sh '''
