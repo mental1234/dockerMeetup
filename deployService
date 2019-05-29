@@ -1,7 +1,7 @@
 node('master'){
-	stage('Create '){
+	stage('Create'){
     sh '''
-      eval (docker-machine env node$environment-1)
+      eval $(docker-machine env node$environment-1)
       docker service create --name nginx -p 80:80 -p 443:443 --network nginx nginx:stable-alpine
     '''
   }
